@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS login page</title>
-</head>
+{% entends login.html %}
 <body>
     <form action="" method="POST">
         <h1>REGISTER</h1>
@@ -15,7 +9,7 @@
         <label for="password">Password</label>
         <input type="text" id="name" placeholder="Enter Your Password">
 
-        <label for="role">Password</label>
+        <label for="role">Role</label>
         <input type="text" id="role" placeholder="Admin ? User?">
     
         <button>register</button>
