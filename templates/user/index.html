@@ -1,8 +1,15 @@
 {% entends base.html %}
 
-{% content block %}
+{% block content %}
 <!--Parcours de la base de donnee pour avoir l'affichage de tout les articles
 classer par date qui (possibilite grace au js de les faire scroller tout seul)
 pour ca une fonction est defini
 les elements doivent etre des carre clickable-->
+
+<div class="item-content">
+    {{ for article in articles }}
+        <div class="item">{{article}}</div> <!--tri en fonction des categorie ou du nom de l'auteur-->
+    {% endfor %}
+</div>
+
 {% endblock %}
