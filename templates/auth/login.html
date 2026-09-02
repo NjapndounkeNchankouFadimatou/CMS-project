@@ -1,27 +1,32 @@
-{% entends base.html %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static' , filename='index.css')}}">
     <title>CMS login page</title>
 </head>
-{% content block %}
-
-{% endblock %}
 
 <body>
-    <form action="" method="POST">
-        <h1>LOGIN</h1>
-        <label for="email">Email</label>
-        <input type="text" id="name" placeholder="Enter Your Name">
-        <label for="password">Password</label>
-        <input type="text" id="name" placeholder="Enter Your Name">
+    <section class="sect1">
+        <form action="" method="POST" class="login-form">
+            <h1>LOGIN</h1>
+            <div class="form-input">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="login-email" placeholder="Enter Your Name" required>
+            </div>
+            <div class="form-input">
+                <label for="password">Password</label>
+                <input type="text" id="password" name="login-password"  placeholder="Enter Your Name" required>
+            </div>
+            <button type="submit">Send</button>
 
-        <button>Login</button>
-
-        <p>No account created? <span><a href="">Register</a></span></p>// lien vers la fonction qui gere le registration
-    </form>
+            <p>No account created? <span><a href="">Register</a></span></p>// lien vers la fonction qui gere le
+            registration
+        </form>
+    </section>
 
 </body>
+
 </html>

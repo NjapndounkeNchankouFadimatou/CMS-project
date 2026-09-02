@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask , render_template
 from db import dBase
 from flask_migrate import Migrate  # pour mettre a jour le smodifs faites sur la table 
 from model import Article, User, Category,Contenu
@@ -11,6 +11,10 @@ dBase.init_app(app) # lien entre bd et app
 migration = Migrate(app, dBase)
 
 
-@app.route('/create')
+@app.route('/')
 def create() :
-    pass
+    return render_template('auth/login.html')
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

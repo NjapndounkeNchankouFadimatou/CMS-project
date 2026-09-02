@@ -23,6 +23,7 @@ class Article(dBase.Model) :
     slug = dBase.Column(dBase.String(200), unique=True, nullable=False)
     contenu = dBase.Column(dBase.Text, nullable=False)          # ⬅️ le texte principal, ici directement
     statut = dBase.Column(dBase.String(20), default='brouillon')
+    template = dBase.Column(dBase.String(20) , default='image pricipal')
     date_creation = dBase.Column(dBase.DateTime, default=datetime.utcnow)
 
     id_auteur = dBase.Column(dBase.Integer, dBase.ForeignKey('user.id'), nullable=False)

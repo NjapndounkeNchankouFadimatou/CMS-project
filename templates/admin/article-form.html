@@ -1,20 +1,40 @@
-{% entends base.html %}
+{% entends 'base.html' %}
 
-{% content block %}
+{% block content %}
 <!--Formulaire pour creer un article , avec deux section , template , et formulaire simple
 -->
 
+<!--Pop up fror templates-->
+<form action="" method="POST" enctype="multipart/form-data">
+    <h2>Entree votre choix de template</h2>
+    <select name="id-template" id="temp">
+        {% for temp in templates %}
+        <option value="{{ temp }}">{{ temp }}</option>
+        {% endfor %}
+    </select>
 
+    <label for="title">Titre</label>
+    <input type="text" id="title" name="title" placeholder="entrez le titre de l'article">
 
-<form action="" method="POST">
-    <h1>LOGIN</h1>
-    <label for="email">Email</label>
-    <input type="text" id="name" placeholder="Enter Your Name">
-    <label for="password">Password</label>
-    <input type="text" id="name" placeholder="Enter Your Name">
+    <label for="category"></label>
+    <select name="id-category" id="categotie">
+        {% for cat in categories %}
+        <option value="{{ cat}}">{{ cat }}</option>
+        {% endfor %}
+    </select>
 
-    <button>Login</button>
+    <label for="texte">Texte</label>
+    <textarea name="article_texte" id="texte" placeholder="entrez du texte"></textarea>
 
-    <p>No account created? <span><a href="">Register</a></span></p>// lien vers la fonction qui gere le registration
+    <label for="medias">Ajouter des images/vidéos</label>
+    <input type="file" name="medias" id="medias" multiple accept="image/*,video/*,application/pdf">
+
+    <input type="radio" name="statut" value="brouillon" id="brouillon">
+    <label for="brouillon">Brouillon</label>
+    <input type="radio" name="statut" value="publie" id="publie">
+    <label for="publie">Publié</label>
+
+    <button type="submit">Poster </button>
+
 </form>
 {% endblock %}

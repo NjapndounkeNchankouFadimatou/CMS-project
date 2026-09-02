@@ -1,11 +1,11 @@
 {% block head %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Sytem </title>
+    <link rel="stylesheet" href="{{url_for('static' , filename='index.css')}}">
+    <title>Content System </title>
 
 </head>
 {% endblock %}
@@ -40,8 +40,10 @@
         </nav>
         <button><a href="">Support</a></button>
     </aside>
-{% content block %}
 {% endblock %}
+{% block content %}
+{% endblock %}
+{% block footer %}
     <footer>
         <div class="logo">
             <img src="" alt="Image de logo">

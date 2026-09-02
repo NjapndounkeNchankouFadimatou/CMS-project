@@ -1,5 +1,45 @@
-{% entends base.html %}
+{% entends ''base.html' %}
 
-{% content block %}
+{% block content %}
 <!--List des articles ( broillon ou pas creer) creer par l'utilisateur-->
+
+<h2>Mes Brouillon</h2>
+
+{% if not Brouillon %}
+<p>Aucun brouillon pour l'instant</p>
+{% endif %}
+
+{% for b in Brouillon %}
+<div class="article-card">
+    {% if b.medias %}
+        <img src="{{ url_for('static', filename='uploads/' + b.medias[0].fichier) }}" alt="{{ b.titre }}">
+    {% endif %}
+
+    <h3>{{ b.titre }}</h3>
+    <p>{{ b.date_creation }}</p>
+
+    <a href="{{}}">Modifier</a>
+    <a href="{{}}">Contenu</a>
+</div>
+
+<h2>Mes Publications</h2>
+<h2>Mes Brouillon</h2>
+
+{% if not Brouillon %}
+<p>Aucun brouillon pour l'instant</p>
+{% endif %}
+
+{% for p in publication %}
+<div class="article-card">
+    {% if p.medias %}
+        <img src="{{ url_for('static', filename='uploads/' + b.medias[0].fichier) }}" alt="{{ b.titre }}">
+    {% endif %}
+
+    <h3>{{ p.titre }}</h3>
+    <p>{{ p.date_creation }}</p>
+
+    <a href="{{}}">Contenu</a>
+</div>
+{% endfor %}
+
 {% endblock %}
