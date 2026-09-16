@@ -1,3 +1,4 @@
+{% block header%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +9,13 @@
     <title>CMS login page</title>
 </head>
 
+{% endblock %}
+
+{% block content%}
+
 <body>
     <section class="sect1">
-        <form action="" method="POST" class="login-form">
+        <form action="{{url_for('auth.login')}}" method="POST" class="login-form">
             <h1>LOGIN</h1>
             <div class="form-input">
                 <label for="email">Email</label>
@@ -22,11 +27,14 @@
             </div>
             <button type="submit">Send</button>
 
-            <p>No account created? <span><a href="">Register</a></span></p>// lien vers la fonction qui gere le
+            <p>No account created? <span><a href="{{url_for('auth.register')}}">Register</a></span></p>// lien vers la fonction qui gere le
             registration
         </form>
     </section>
 
 </body>
-
 </html>
+{% endblock %}
+
+
+

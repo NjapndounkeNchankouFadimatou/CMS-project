@@ -1,13 +1,11 @@
-{% entends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
 <!--Visualisation des articles apres selection dans le form de la nav  
 Les articles sont presenter en carre aussi clickable egalement 
 -->
-<div class="item-content">
-    {%for research in research_form %}
+<div class="item-content">   
     <div class="item">{{research}}</div>
-    {% endblock %}
 </div>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-{% entends base.html %}
+{% extends 'base.html' %}
 
 {% block content %}
 <!--Parcours de la base de donnee pour avoir l'affichage de tout les articles
@@ -7,8 +7,12 @@ pour ca une fonction est defini
 les elements doivent etre des carre clickable-->
 
 <div class="item-content">
-    {{ for article in articles }}
-        <div class="item">{{article}}</div> <!--tri en fonction des categorie ou du nom de l'auteur-->
+    {% for article in Articles %}
+        <div class="item">{{article}}</div>
+        <p>{{article.medias}}</p>
+        <p>{{article.titre}}</p>
+        <p>{{article.categorie}}</p> 
+        <p>{{article.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
     {% endfor %}
 </div>
 

@@ -1,7 +1,13 @@
-from flask import Blueprint, render_template ,request,url_for, session
-from werkzeug.security import generate_password_hash
+from flask import Blueprint, render_template ,request,url_for, session, redirect
+from werkzeug.security import generate_password_hash,check_password_hash
+from db import dBase
+from model import User
+from user.routes_user import user
+from datetime import timedelta
 
-auth= Blueprint('admin', __name__)
+auth= Blueprint('auth', __name__)
+auth.permanent_session_lifetime = timedelta(days=7)
+
 
 @auth.route('/register', methods=['POST', 'GET'])
 def register() :
@@ -12,35 +18,38 @@ def register() :
         name = request.form.get('regis-name').strip()
         role = request.form.get('regis-role').strip()
         
-        #data verification
+        existingUser = User.query.filter_by(email=email).first()
+        
+        #data validation
         if not name :
             return render_template('auth/register.html' ,error ="Entrez votre nom")
-        if not email :
-            return render_template('auth/register.html' ,error ="Entrez un email valide")
+        
+        if not email  or existingUser:
+            return render_template('auth/register.html' ,error ="Entrez un email valide ou logger vous")
         if not password or len(password) < 6 :
             return render_template('auth/register.html' ,error ="Entrez un mot de passe valide ")
  
-        # hash du mot de passe
+        #password hash
         hashed_password = generate_password_hash(password)
         
         #addition of data
         new_user = User(name=name, email=email, password=hashed_password, role=role)
-        
-        
-        #creation d'une sesssion
         dBase.session.add(new_user)
         dBase.session.commit()
+
+        #creation of user session
+        session.permanent = True
+        session['name'] = name
+        session['role'] = role
         
-        
-        user_role = session['role']
-        if new_user.role == 'admin' :
-            return request.url(url_for('article-list'))
+        if session.get('role') == 'admin':
+            return redirect(url_for('user.get_articles'))
         else :
-            return request.url(url_for('index'))
-        
+            return redirect(url_for('user.get_articles'))
+            
     return render_template('auth/register.html')
-    
-    
+            
+        
 @auth.route('/login' , methods=['POST', 'GET'])
 def login() :
     if request.method == 'POST' :
@@ -53,12 +62,25 @@ def login() :
         if not password or len(password) < 6:
             return render_template('auth/login.html' ,error ="Entrez un mot de passe valide ")
         
-        if email != dBase_email :
-            return render_template('register.html')
+        existingUser = User.query.filter_by(email=email).first()
+        if existingUser is None :
+            print("No user found with this email.") #add a flash message          
+            return render_template('auth/login.html', error='Enter a valide email or password')
+            
+        checkPassword = check_password_hash(existingUser.password, password)
+        if not checkPassword :
+            return render_template('auth/login.html', error='Mot de passe incorrect')
+        
+        if 'name' in session:
+            if session.get('role') == 'admin':
+                return redirect(url_for('user.article-form'))
+            else :
+                return redirect(url_for('user.get_articles'))
+        
+    return render_template('auth/login.html')
         
 
-        
-        
 @auth.route('/logout')
 def logout() :
-    session.pop(user)
+    session.clear()
+    render_template('auth/register.html')

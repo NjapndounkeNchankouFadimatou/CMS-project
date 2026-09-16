@@ -8,7 +8,7 @@ class User(dBase.Model) :
     password = dBase.Column(dBase.String(100) , nullable=False)
     role = dBase.Column(dBase.String(100) , default='admin')
 
-    articles = dBase.relationship('Articles' , backref='auteur' ,lazy=True)
+    articles = dBase.relationship('Article' , backref='auteur' ,lazy=True)
 
 class Category(dBase.Model) :
     id = dBase.Column(dBase.Integer, primary_key=True)
