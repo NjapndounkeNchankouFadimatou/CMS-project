@@ -2,7 +2,6 @@ from flask import Blueprint, render_template ,request,url_for, session, redirect
 from werkzeug.security import generate_password_hash,check_password_hash
 from db import dBase
 from model import User
-from user.routes_user import user
 from datetime import timedelta
 
 auth= Blueprint('auth', __name__)
@@ -71,11 +70,19 @@ def login() :
         if not checkPassword :
             return render_template('auth/login.html', error='Mot de passe incorrect')
         
-        if 'name' in session:
-            if session.get('role') == 'admin':
-                return redirect(url_for('user.article-form'))
-            else :
-                return redirect(url_for('user.get_articles'))
+        
+        name = existingUser.name
+        role = existingUser.role
+        
+        #creation of user session
+        session.permanent = True
+        session['name'] = name
+        session['role'] = role
+
+        if session.get('role') == 'admin':
+            return redirect(url_for('user.article-form'))
+        else :
+            return redirect(url_for('user.get_articles'))
         
     return render_template('auth/login.html')
         

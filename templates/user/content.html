@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!--Visualisation d'un  article apres selection dans la liste 
+Les articles sont presenter dans leurs entierete
+-->
+<div class="item-content">
+{% if content%}   
+    <div class="item">{{content}}</div>
+{% else %}
+<p>Aucun article trouvé pour cette recherche.</p>
+{% endif%}
+</div>
+
+{% endblock %}

@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 #configuration de l'app avec la base de donnee
 load_dotenv('.env.local')#to load secret key var from .env.local
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///base.db" #config de la DBMS choisi et aussi le fichier avec les donnee
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL') #config de la DBMS choisi et aussi le fichier avec les donnee
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 # app.config['SECRET_KEY'] = 'a9de8a3f91b8b02a633e10c243d473dd333e511f99ffe7711b72e0454cab11d3'

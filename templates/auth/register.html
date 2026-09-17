@@ -1,5 +1,6 @@
 {% extends 'auth/login.html' %}
 
+   {%block title%} <title>CMS Registration Page</title>{% endblock %}
 {% block content%}
 <body>
     <form action="{{url_for('auth.register')}}" method="POST">
