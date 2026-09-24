@@ -38,6 +38,7 @@ def register() :
 
         #creation of user session
         session.permanent = True
+        session['id'] = id
         session['name'] = name
         session['role'] = role
         

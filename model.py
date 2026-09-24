@@ -26,8 +26,8 @@ class Article(dBase.Model) :
     #template = dBase.Column(dBase.String(20) , default='image pricipal')
     date_creation = dBase.Column(dBase.DateTime, default=datetime.utcnow)
 
-    id_auteur = dBase.Column(dBase.Integer, dBase.ForeignKey('user.id'), nullable=False) #create link between the two table
-    id_categorie = dBase.Column(dBase.Integer, dBase.ForeignKey('category.id'), nullable=True)
+    user_id = dBase.Column(dBase.Integer, dBase.ForeignKey('user.id'), nullable=False) #create link between the two table
+    art_categorie = dBase.Column(dBase.Integer, dBase.ForeignKey('category.id'), nullable=True)
     
     medias = dBase.relationship('Contenu', backref='article', lazy=True, cascade='all, delete-orphan')
 

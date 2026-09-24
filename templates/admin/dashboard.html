@@ -3,4 +3,65 @@
 {% content block %}
 <!--Operation crud pouvant etre realiser sur chaque articles par l'utilisateur
 -->
+
+
+<!--List des articles ( broillon ou pas creer) creer par l'utilisateur-->
+
+<h2>Mes Brouillon</h2>
+
+{% if not brouillon %}
+<p>Aucun brouillon pour l'instant</p>
+
+{% else %}
+
+{% for b in brouillon %}
+<div class="article-card">
+    <a href="{{ url_for('admin.content', content_id=article.id) }}">
+        {% if b.medias %}
+        <img src="{{ url_for('static', filename='uploads/' ~ b.medias[0].file_path) }}" alt="Média">
+        {% endif %}
+        <p>{{b.titre}}</p>
+        <p>{{b.categorie.nom}}</p>
+        <p>{{b.auteur.name}}</p>
+
+        <a href="{{url_for('admin.dashborad_modification', content_id=article.id)}}">Modifier</a>
+        <a href="{{url_for('admin.dashboard_change_status')}}">Publier</a>
+        <a href="{{url_for('admin.dashboard_modification')}}">Supprimer</a>
+    </a>
+
+</div>
+{% endfor %}
+{% endif %}
+
+<h2>Mes Publications</h2>
+
+{% if not publication %}
+<p>Aucun publication pour l'instant</p>
+
+
+{% for p in publication %}
+<div class="article-card">
+    <a href="{{ url_for('admin.content', content_id=article.id) }}">
+        {% if p.medias %}
+        <img src="{{ url_for('static', filename='uploads/' ~ p.medias[0].file_path) }}" alt="Média">
+        {% endif %}
+        <p>{{p.titre}}</p>
+        <p>{{p.categorie.nom}}</p>
+        <p>{{p.auteur.name}}
+        
+
+        <!--<form action="{{ url_for('admin.delete_article', content_id=article.id) }}" method="POST" style="display:inline;">
+    <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+        Supprimer
+    </button>
+</form>-->
+        <a href="{{url_for('admin.dashboard_delete' , del_content_id=article.id)}}">Supprimer</a>
+        <a href="{{url_for('admin.dashboard_change_status')}}">Brouillon/a>
+    </a>
+</div>
+
+{% endfor %}
+
+{% endif %}
+
 {% endblock %}

@@ -1,56 +1,56 @@
 {% entends 'base.html' %}
 
 {% block content %}
-<!--List des articles ( broillon ou pas creer) creer par l'utilisateur-->
 
-<h2>Mes Brouillon</h2>
+<div class="research">
+    <form action="{{url_for('admin.get_articles')}}" method="GET">
+        <input type="text" name="research" placeholder="research an article or a categorie">
+        <button type="submit">Research</button>
+        </select>
 
-{% if not brouillon %}
-<p>Aucun brouillon pour l'instant</p>
+    </form>
+</div>
 
+{% if articles%}
+<!--could use href to submit url to content article page-->
+<div class="item-content ">
+    {% for article in articles %}
+    <a href="{{ url_for('admin.content', content_id=article.id) }}">
+        {% if article.medias %}
+        <img src="{{ url_for('static', filename='uploads/' ~ article.medias[0].file_path) }}" alt="Média">
+        {% endif %}
+        <p>{{article.titre}}</p>
+        <p>{{article.categorie.nom}}</p>
+        <p>{{article.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
+    </a>
+
+    {% else %}
+        <p>Aucun article disponible.</p>
+    {% endfor %}
+</div>
+
+{% elif researched_articles %}
+
+<div class="item-content ">
+    {% for article in researched_articles %}
+
+    <a href="{{ url_for('admin.content', content_id=article.id) }}">
+        {% if article.medias %}
+        <img src="{{ url_for('static', filename='uploads/' ~ article.medias[0].file_path) }}" alt="Média">
+        {% endif %}
+        <p>{{article.titre}}</p>
+        <p>{{article.categorie.nom}}</p>
+        <p>{{article.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
+    </a>
+
+    {% else %}
+        <p>Aucun article ne correspond à votre recherche.</p>
+    {% endfor %}
+
+</div>
 {% else %}
-
-{% for b in brouillon %}
-<div class="article-card">
-    <a href="{{ url_for('admin.content', content_id=article.id) }}">
-        {% if b.medias %}
-        <img src="{{ url_for('static', filename='uploads/' ~ b.medias[0].file_path) }}" alt="Média">
-        {% endif %}
-        <p>{{b.titre}}</p>
-        <p>{{b.categorie.nom}}</p>
-        <p>{{b.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
-
-        <a href="{{}}">Modifier</a>
-        <a href="{{}}">Publier</a>
-        <a href="{{}}">Supprimer</a>
-    </a>
-
-</div>
-{% endfor %}
+<p>Aucun article a afficher.</p>
 {% endif %}
 
-<h2>Mes Publications</h2>
-
-{% if not publication %}
-<p>Aucun publication pour l'instant</p>
-
-
-{% for p in publication %}
-<div class="article-card">
-    <a href="{{ url_for('admin.content', content_id=article.id) }}">
-        {% if p.medias %}
-        <img src="{{ url_for('static', filename='uploads/' ~ p.medias[0].file_path) }}" alt="Média">
-        {% endif %}
-        <p>{{p.titre}}</p>
-        <p>{{p.categorie.nom}}</p>
-        <p>{{p.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
-        
-        <a href="{{}}">Supprimer</a>
-        <a href="{{}}">Brouillon/a>
-    </a>
-</div>
-{% endfor %}
-
-{% endif %}
 
 {% endblock %}

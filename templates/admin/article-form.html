@@ -5,23 +5,23 @@
 -->
 
 <!--Pop up fror templates-->
-<form action="" method="POST" enctype="multipart/form-data">
+<form action="{{url_for('admin.form_submission')}}" method="POST" enctype="multipart/form-data">
 
     <label for="title">Titre</label>
-    <input type="text" id="title" name="title" placeholder="entrez le titre de l'article">
+    <input type="text" id="title" name="title" placeholder="entrez le titre de l'article" value="{{ article.titre if article else '' }}">
 
-    <label for="category">Categorie</label>
-    <select name="category" id="categorie">
+    <label for="select_category">Choisir la categorie</label>
+    <select id="select_category">
         {% for cat in categories %}
-        <option value="{{ cat }}">{{ cat }}</option>
+        <option value="{{ cat.id }}">{{ cat.nom }}</option>
         {% endfor %}
     </select>
     <p>or</p>
-    <label for="title">Categorie</label>
-    <input type="text" id="category" name="category" placeholder="entrez la categorie souhaiter">
+    <label for="category_name">Categorie</label>
+    <input type="text" id="category_name" name="category" placeholder="entrez la categorie souhaiter" value="{{ article.categorie.nom if article else '' }}" required>
 
     <label for="texte">Texte</label>
-    <textarea name="article_text" id="texte" placeholder="entrez du texte"></textarea>
+    <textarea name="article_text" id="texte" placeholder="entrez du texte">{{ article.contenu if article else '' }}</textarea>
 
     <label for="medias">Ajouter des images/vidéos</label>
     <input type="file" name="medias" id="medias" multiple accept="image/*,video/*">
@@ -29,9 +29,22 @@
     <label for="brouillon">Brouillon</label>
     <input type="radio" name="status" value="brouillon" id="brouillon">
     <label for="publier">Publié</label>
-    <input type="radio" name="status" value="publier" id="publier">
+    <input type="radio" name="status" value="publier" id="publier"  >
 
     <button type="submit">Poster </button>
 
 </form>
+
+
+<script>
+    const selectCat = document.getElementById('select_category');
+    const inputCat = document.getElementById('category_name');
+
+    // Quand l'utilisateur choisit une option dans le select, elle remplit le champ texte
+    selectCat.addEventListener('change', () => {
+        if (selectCat.value !== '') {
+            inputCat.value = selectCat.value;
+        }
+    });
+</script>
 {% endblock %}

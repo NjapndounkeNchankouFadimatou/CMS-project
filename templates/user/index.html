@@ -7,7 +7,7 @@ pour ca une fonction est defini
 les elements doivent etre des carre clickable-->
 
 <div class="research">
-    <form action="{{url_for('user.get_research_article')}}" method="GET">
+    <form action="{{url_for('user.get_articles')}}" method="GET">
         <input type="text" name="research" placeholder="research an article or a categorie">
         <button type="submit">Research</button>
         </select>
@@ -15,10 +15,15 @@ les elements doivent etre des carre clickable-->
     </form>
 </div>
 
-{% if Articles%}
+{% if articles%}
 <!--could use href to submit url to content article page-->
 <div class="item-content ">
-    {% for article in Articles %}
+    {% for article in articles %}
+    {% if not article%}
+
+    <p>Aucun article trouvé.</p>
+
+    {% else %}
     <a href="{{ url_for('user.content', content_id=article.id) }}">
         {% if article.medias %}
         <img src="{{ url_for('static', filename='uploads/' ~ article.medias[0].file_path) }}" alt="Média">
@@ -29,8 +34,30 @@ les elements doivent etre des carre clickable-->
     </a>
     {% endfor %}
 </div>
+
+{% elif researched_articles %}
+
+<div class="item-content ">
+    {% for article in researched_articles %}
+    {% if not article%}
+
+    <p>Aucun article trouvé.</p>
+
+    {% else %}
+    <a href="{{ url_for('user.content', content_id=article.id) }}">
+        {% if article.medias %}
+        <img src="{{ url_for('static', filename='uploads/' ~ article.medias[0].file_path) }}" alt="Média">
+        {% endif %}
+        <p>{{article.titre}}</p>
+        <p>{{article.categorie.nom}}</p>
+        <p>{{article.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
+    </a>
+    {% endfor %}
+
+</div>
 {% else %}
-<p>Aucun article trouvé pour cette recherche.</p>
+<p>Aucun article trouvé.</p>
 {% endif %}
+
 
 {% endblock %}
