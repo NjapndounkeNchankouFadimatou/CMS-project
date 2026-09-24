@@ -6,33 +6,30 @@
 
 <!--Pop up fror templates-->
 <form action="" method="POST" enctype="multipart/form-data">
-    <h2>Entree votre choix de template</h2>
-    <select name="id-template" id="temp">
-        {% for temp in templates %}
-        <option value="{{ temp }}">{{ temp }}</option>
-        {% endfor %}
-    </select>
 
     <label for="title">Titre</label>
     <input type="text" id="title" name="title" placeholder="entrez le titre de l'article">
 
-    <label for="category"></label>
-    <select name="id-category" id="categotie">
+    <label for="category">Categorie</label>
+    <select name="category" id="categorie">
         {% for cat in categories %}
-        <option value="{{ cat}}">{{ cat }}</option>
+        <option value="{{ cat }}">{{ cat }}</option>
         {% endfor %}
     </select>
+    <p>or</p>
+    <label for="title">Categorie</label>
+    <input type="text" id="category" name="category" placeholder="entrez la categorie souhaiter">
 
     <label for="texte">Texte</label>
-    <textarea name="article_texte" id="texte" placeholder="entrez du texte"></textarea>
+    <textarea name="article_text" id="texte" placeholder="entrez du texte"></textarea>
 
     <label for="medias">Ajouter des images/vidéos</label>
-    <input type="file" name="medias" id="medias" multiple accept="image/*,video/*,application/pdf">
+    <input type="file" name="medias" id="medias" multiple accept="image/*,video/*">
 
-    <input type="radio" name="statut" value="brouillon" id="brouillon">
     <label for="brouillon">Brouillon</label>
-    <input type="radio" name="statut" value="publie" id="publie">
-    <label for="publie">Publié</label>
+    <input type="radio" name="status" value="brouillon" id="brouillon">
+    <label for="publier">Publié</label>
+    <input type="radio" name="status" value="publier" id="publier">
 
     <button type="submit">Poster </button>
 

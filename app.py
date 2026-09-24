@@ -4,6 +4,7 @@ from flask_migrate import Migrate  # pour mettre a jour le smodifs faites sur la
 from dotenv import load_dotenv
 from auth.routes import auth
 from user.routes_user import user
+from admin.routes import admin
 import os
 
 app = Flask(__name__)
@@ -19,6 +20,7 @@ migration = Migrate(app, dBase)
 
 app.register_blueprint(auth , url_prefix="/authentification")
 app.register_blueprint(user , url_prefix="/user")
+app.register_blueprint(admin , url_prefix="/admin")
 
 @app.route('/')
 def create() :

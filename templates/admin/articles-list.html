@@ -1,45 +1,56 @@
-{% entends ''base.html' %}
+{% entends 'base.html' %}
 
 {% block content %}
 <!--List des articles ( broillon ou pas creer) creer par l'utilisateur-->
 
 <h2>Mes Brouillon</h2>
 
-{% if not Brouillon %}
+{% if not brouillon %}
 <p>Aucun brouillon pour l'instant</p>
-{% endif %}
 
-{% for b in Brouillon %}
+{% else %}
+
+{% for b in brouillon %}
 <div class="article-card">
-    {% if b.medias %}
-        <img src="{{ url_for('static', filename='uploads/' + b.medias[0].fichier) }}" alt="{{ b.titre }}">
-    {% endif %}
+    <a href="{{ url_for('admin.content', content_id=article.id) }}">
+        {% if b.medias %}
+        <img src="{{ url_for('static', filename='uploads/' ~ b.medias[0].file_path) }}" alt="Média">
+        {% endif %}
+        <p>{{b.titre}}</p>
+        <p>{{b.categorie.nom}}</p>
+        <p>{{b.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
 
-    <h3>{{ b.titre }}</h3>
-    <p>{{ b.date_creation }}</p>
+        <a href="{{}}">Modifier</a>
+        <a href="{{}}">Publier</a>
+        <a href="{{}}">Supprimer</a>
+    </a>
 
-    <a href="{{}}">Modifier</a>
-    <a href="{{}}">Contenu</a>
 </div>
+{% endfor %}
+{% endif %}
 
 <h2>Mes Publications</h2>
-<h2>Mes Brouillon</h2>
 
-{% if not Brouillon %}
-<p>Aucun brouillon pour l'instant</p>
-{% endif %}
+{% if not publication %}
+<p>Aucun publication pour l'instant</p>
+
 
 {% for p in publication %}
 <div class="article-card">
-    {% if p.medias %}
-        <img src="{{ url_for('static', filename='uploads/' + b.medias[0].fichier) }}" alt="{{ b.titre }}">
-    {% endif %}
-
-    <h3>{{ p.titre }}</h3>
-    <p>{{ p.date_creation }}</p>
-
-    <a href="{{}}">Contenu</a>
+    <a href="{{ url_for('admin.content', content_id=article.id) }}">
+        {% if p.medias %}
+        <img src="{{ url_for('static', filename='uploads/' ~ p.medias[0].file_path) }}" alt="Média">
+        {% endif %}
+        <p>{{p.titre}}</p>
+        <p>{{p.categorie.nom}}</p>
+        <p>{{p.author}}</p><!--tri en fonction des categorie ou du nom de l'auteur-->
+        
+        <a href="{{}}">Supprimer</a>
+        <a href="{{}}">Brouillon/a>
+    </a>
 </div>
 {% endfor %}
+
+{% endif %}
 
 {% endblock %}

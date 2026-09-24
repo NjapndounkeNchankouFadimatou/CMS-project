@@ -1,5 +1,25 @@
-{% entends 'base.html' %}
+{% entends 'user/base.html' %}
 
 {% block content %}
+
+<!--Visualisation d'un  article apres selection dans la liste 
+Les articles sont presenter dans leurs entierete
+-->
+<div class="item-content">
+{% if admin_content%}   
+        <img src="{{ url_for('static', filename='uploads/' + admin_content.medias[0].fichier) }}" alt="{{ admin_content.titre }}">
+        <p id="entete">{{admin_content.titre}}/p>
+        {% for i in admin_content.medias%}
+            <img src="{{ url_for('static', filename='uploads/' + admin_content.medias[i+1].fichier) }}" alt="{{ admin_content.titre }}">
+        {% endfor %}
+        <div id="contenu_text">{{admin_content.contenu}}</div>
+        <p>{{admin_content.date_creation}}/p>
+
+        <p>{{admin_content.statut}}</p>
+
+{% else %}
+<p>Aucun article trouvé pour cette recherche.</p>
+{% endif%}
+</div>
 
 {% endblock %}

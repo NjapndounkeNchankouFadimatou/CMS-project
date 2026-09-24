@@ -15,19 +15,20 @@ class Category(dBase.Model) :
     nom = dBase.Column(dBase.String(100), nullable=False)
     slug = dBase.Column(dBase.String(100), unique=True, nullable=False)
 
-    articles = dBase.relationship('Article', backref='categorie', lazy=True)
+    articles = dBase.relationship('Article', backref='categorie', lazy=True) #creates the relationship to have access to info
 
 class Article(dBase.Model) :
     id = dBase.Column(dBase.Integer, primary_key=True)
     titre = dBase.Column(dBase.String(200), nullable=False)
-    slug = dBase.Column(dBase.String(200), unique=True, nullable=False)
-    contenu = dBase.Column(dBase.Text, nullable=False)          # ⬅️ le texte principal, ici directement
+   # slug = dBase.Column(dBase.String(200), unique=True, nullable=False)
+    contenu = dBase.Column(dBase.Text, nullable=False)          # le texte principal ici directement
     statut = dBase.Column(dBase.String(20), default='brouillon')
-    template = dBase.Column(dBase.String(20) , default='image pricipal')
+    #template = dBase.Column(dBase.String(20) , default='image pricipal')
     date_creation = dBase.Column(dBase.DateTime, default=datetime.utcnow)
 
-    id_auteur = dBase.Column(dBase.Integer, dBase.ForeignKey('user.id'), nullable=False)
+    id_auteur = dBase.Column(dBase.Integer, dBase.ForeignKey('user.id'), nullable=False) #create link between the two table
     id_categorie = dBase.Column(dBase.Integer, dBase.ForeignKey('category.id'), nullable=True)
+    
     medias = dBase.relationship('Contenu', backref='article', lazy=True, cascade='all, delete-orphan')
 
 class Contenu(dBase.Model):

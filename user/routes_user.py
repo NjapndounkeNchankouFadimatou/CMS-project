@@ -1,10 +1,6 @@
 from flask import Blueprint, render_template ,request,url_for, session
 from werkzeug.security import generate_password_hash
 from db import dBase
-from sqlalchemy import or_
-from model import Article, Category
-
-
 user = Blueprint('user', __name__)
 
 @user.route('/all-articles')
@@ -15,7 +11,7 @@ def get_articles() :
     return render_template('auth/login.html')
     
 
-@user.route('/all-articles/researched')
+@user.route('/all-articles/researched_article')
 def get_research_article() :
     if 'name' in session :
         researched_article = request.args.get('research')
@@ -27,7 +23,7 @@ def get_research_article() :
                 Category.nom.ilike(f"%{researched_article}%")
             )).all() #renvoie un article ou sa categorie dependament de si on trouve correspondance
             
-        return render_template('user/index.html' , Article=result)
+        return render_template('user/index.html' , article=result)
     return render_template('auth/login.html')              
             
 """

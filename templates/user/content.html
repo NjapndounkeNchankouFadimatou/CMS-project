@@ -5,8 +5,15 @@
 Les articles sont presenter dans leurs entierete
 -->
 <div class="item-content">
-{% if content%}   
-    <div class="item">{{content}}</div>
+{% if content%} 
+        <img src="{{ url_for('static', filename='uploads/' + content.medias[0].fichier) }}" alt="{{ content.titre }}">
+        <p id="entete">{{content.titre}}/p>
+        {% for i in content.medias%}
+            <img src="{{ url_for('static', filename='uploads/' + content.medias[i+1].fichier) }}" alt="{{ content.titre }}">
+        {% endfor %}
+        <div id="contenu_text">{{content.contenu}}</div>
+        <p>{{content.date_creation}}/p>
+        <p>{{content.statut}}</p>  
 {% else %}
 <p>Aucun article trouvé pour cette recherche.</p>
 {% endif%}
